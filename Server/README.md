@@ -1,4 +1,4 @@
-# 📦 Smart Inventory & Order Management System — Backend API
+# Smart Inventory & Order Management System — Backend API
 
 A production-ready, modular REST API built with **TypeScript**, **Express.js**, **MongoDB (Mongoose)**, and **Zod** validation. Designed for managing products, categories, orders, stock levels, and restock priorities.
 

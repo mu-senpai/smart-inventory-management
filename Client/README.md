@@ -147,7 +147,6 @@ This app uses a **BFF (Backend for Frontend) proxy pattern** instead of the depr
 |---|---|---|
 | Admin | `admin@gmail.com` | `123456` |
 | Demo | `demo@inventory.com` | `Demo@1234` |
-| Manager | `manager@smartinventory.com` | `123456` |
 
 ## 📡 API Integration
 
