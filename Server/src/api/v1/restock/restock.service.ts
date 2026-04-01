@@ -5,6 +5,7 @@ export interface RestockItem {
   product: IProduct;
   gap: number;
   priority: RestockPriority;
+  gapPercentage: number;
 }
 
 export const getRestockQueue = async (): Promise<RestockItem[]> => {
@@ -15,7 +16,7 @@ export const getRestockQueue = async (): Promise<RestockItem[]> => {
     .populate("category", "name")
     .sort({ stockQuantity: 1 });
 
-  return products.map((product) => {
+  const queue: RestockItem[] = products.map((product) => {
     const gap = product.minThreshold - product.stockQuantity;
     const gapPercentage = product.minThreshold > 0
       ? (gap / product.minThreshold) * 100
@@ -30,6 +31,9 @@ export const getRestockQueue = async (): Promise<RestockItem[]> => {
       priority = RestockPriority.LOW;
     }
 
-    return { product, gap, priority };
+    return { product, gap, priority, gapPercentage };
   });
+
+  // ✅ Sort by gapPercentage descending (most critical first)
+  return queue.sort((a, b) => b.gapPercentage - a.gapPercentage);
 };
