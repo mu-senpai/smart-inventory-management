@@ -1,5 +1,7 @@
 # Smart Inventory & Order Management System
 
+**Live Project**: [https://smart-inventory-client-gilt.vercel.app](https://smart-inventory-client-gilt.vercel.app)
+
 A production-ready, full-stack application built for efficient inventory tracking, order fulfillment, and real-time business analytics. This project follows a modular architecture with a dedicated **Next.js 16** frontend and a **TypeScript/Express** REST API.
 
 ---
