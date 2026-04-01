@@ -1,8 +1,5 @@
 import { cookies } from "next/headers";
-
-const BACKEND_URL =
-  process.env.NEXT_PUBLIC_BASE_URL ||
-  "https://smart-inventory-server.vercel.app/api/v1";
+import { BACKEND_URL } from "./constants";
 
 /**
  * Reusable server-side fetch utility for Next.js Server Components.
@@ -26,12 +23,15 @@ export async function serverFetch<T = unknown>(
       cache: "no-store",
     });
 
-    if (!res.ok) return fallback;
+    if (!res.ok) {
+      console.warn(`[SSR] Fetch failed for ${path} with status ${res.status}`);
+      return fallback;
+    }
 
     const json = await res.json();
     return json.data ?? fallback;
   } catch (e) {
-    console.error(`SSR fetch failed for ${path}:`, e);
+    console.error(`[SSR] Fetch encountered an exception for ${path}:`, e);
     return fallback;
   }
 }
@@ -56,10 +56,13 @@ export async function serverFetchFull<T = unknown>(
       cache: "no-store",
     });
 
-    if (!res.ok) return fallback;
+    if (!res.ok) {
+      console.warn(`[SSR Full] Fetch failed for ${path} with status ${res.status}`);
+      return fallback;
+    }
     return await res.json();
   } catch (e) {
-    console.error(`SSR fetch failed for ${path}:`, e);
+    console.error(`[SSR Full] Fetch encountered an exception for ${path}:`, e);
     return fallback;
   }
 }

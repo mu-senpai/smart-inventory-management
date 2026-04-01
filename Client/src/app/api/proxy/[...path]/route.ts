@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { BACKEND_URL } from "@/lib/constants";
 
 export async function GET(request: NextRequest, { params }: { params: any }) {
   return handleProxyRequest(request, params);
@@ -27,8 +28,7 @@ async function handleProxyRequest(request: NextRequest, params: any) {
     const resolvedParams = await params;
     const pathSegments = resolvedParams.path || [];
     const path = pathSegments.join("/");
-    const backendUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://smart-inventory-server.vercel.app/api/v1";
-    const targetUrl = `${backendUrl}/${path}${request.nextUrl.search}`;
+    const targetUrl = `${BACKEND_URL}/${path}${request.nextUrl.search}`;
 
     const cookieStore = await cookies();
     const token = cookieStore.get("accessToken")?.value;
