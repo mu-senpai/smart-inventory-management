@@ -5,6 +5,7 @@ import {
     useCreateProductMutation,
     useUpdateProductMutation,
 } from '@/redux/api/productApi';
+import { UIProduct } from '@/services/apiAdapter';
 import { Product } from '@/type/type';
 import { CreateProductFormSchema } from '@/types/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -15,7 +16,7 @@ import { toast } from 'sonner';
 
 interface ProductModalProps {
     open: boolean;
-    editingProduct: Product | null;
+    editingProduct: UIProduct | null;
     onClose: () => void;
 }
 
@@ -93,7 +94,7 @@ export default function ProductModal({ open, editingProduct, onClose }: ProductM
 
             if (isEditing) {
                 const result = await updateProduct({
-                    id: editingProduct._id,
+                    id: editingProduct.id,
                     data: payload,
                 }).unwrap();
                 if (result.success) {

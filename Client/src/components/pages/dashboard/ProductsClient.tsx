@@ -4,20 +4,21 @@ import ProductModal from '@/components/pages/dashboard/ProductModal';
 import TablePagination from '@/components/shared/TablePagination';
 import { formatCurrency } from '@/lib/formatters';
 import { useDeleteProductMutation, useGetProductsQuery } from '@/redux/api/productApi';
+import { UIProduct } from '@/services/apiAdapter';
 import { Product } from '@/type/type';
 import { DeleteOutlined, EditOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Popconfirm } from 'antd';
 import { useCallback, useState } from 'react';
 import { toast } from 'sonner';
 
-export default function ProductsClient({ initialProducts }: { initialProducts?: Product[] }) {
+export default function ProductsClient({ initialProducts }: { initialProducts?: UIProduct[] }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize] = useState(10);
 
     // Modal state
     const [modalOpen, setModalOpen] = useState(false);
-    const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+    const [editingProduct, setEditingProduct] = useState<UIProduct | null>(null);
 
     // RTK Query
     const { data: productsResponse, isLoading } = useGetProductsQuery({
@@ -46,7 +47,7 @@ export default function ProductsClient({ initialProducts }: { initialProducts?: 
         setModalOpen(true);
     }, []);
 
-    const handleOpenEdit = useCallback((product: Product) => {
+    const handleOpenEdit = useCallback((product: UIProduct) => {
         setEditingProduct(product);
         setModalOpen(true);
     }, []);
@@ -152,11 +153,11 @@ export default function ProductsClient({ initialProducts }: { initialProducts?: 
                                         </tr>
                                     ))
                                 ) : (
-                                    resolvedProducts.map((product: any) => (
-                                        <tr key={product._id} className="hover:bg-gray-50 dark:hover:bg-[#1f1f1f] transition-colors">
+                                    resolvedProducts.map((product: UIProduct) => (
+                                        <tr key={product.id} className="hover:bg-gray-50 dark:hover:bg-[#1f1f1f] transition-colors">
                                             {/* Product ID */}
                                             <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500 font-mono">
-                                                #{(product?._id?.slice(-6) ?? '------').toUpperCase()}
+                                                #{(product?.id?.slice(-6) ?? '------').toUpperCase()}
                                             </td>
 
                                             {/* Name */}
@@ -229,7 +230,7 @@ export default function ProductsClient({ initialProducts }: { initialProducts?: 
                                                     <Popconfirm
                                                         title="Delete Product"
                                                         description="Are you sure you want to delete this product?"
-                                                        onConfirm={() => handleDelete(product._id)}
+                                                        onConfirm={() => handleDelete(product.id)}
                                                         okText="Yes"
                                                         cancelText="No"
                                                         okButtonProps={{
