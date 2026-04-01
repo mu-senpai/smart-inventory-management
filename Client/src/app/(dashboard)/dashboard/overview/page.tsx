@@ -98,11 +98,11 @@ export default async function DashboardOverview() {
                             {summary?.productSummaries?.length > 0 ? (
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                     {summary.productSummaries.map((cat: any, i: number) => (
-                                        <div key={i} className={`p-4 rounded-xl border transition-colors ${cat.healthStatus === 'High Priority' ? 'bg-red-50 border-red-200 dark:bg-red-950/20 dark:border-red-900/50' : cat.healthStatus === 'Medium Priority' ? 'bg-orange-50 border-orange-200 dark:bg-orange-950/20 dark:border-orange-900/50' : cat.healthStatus === 'Low Priority' ? 'bg-blue-50 border-blue-200 dark:bg-blue-950/20 dark:border-blue-900/50' : 'bg-gray-50 border-gray-100 dark:bg-[#1a1a1a] dark:border-[#303030]'}`}>
+                                        <div key={i} className={`p-4 rounded-xl border transition-colors ${cat.healthStatus === 'Out of Stock' ? 'bg-red-50 border-red-200 dark:bg-red-950/20 dark:border-red-900/50' : cat.healthStatus === 'Low Stock' ? 'bg-orange-50 border-orange-200 dark:bg-orange-950/20 dark:border-orange-900/50' : 'bg-gray-50 border-gray-100 dark:bg-[#1a1a1a] dark:border-[#303030]'}`}>
                                             <p className="font-semibold text-sm mb-2 dark:text-gray-200 group truncate" title={cat.productName}>{cat.productName}</p>
                                             <div className="flex flex-col gap-1 text-xs text-gray-500 dark:text-gray-400">
-                                                <span><strong className={`font-semibold ${cat.healthStatus === 'High Priority' ? 'text-red-600 dark:text-red-400' : 'text-gray-900 dark:text-gray-100'}`}>{cat.stockLeft}</strong> left</span>
-                                                <span className={`${cat.healthStatus === 'High Priority' ? 'text-red-500 font-bold' : cat.healthStatus === 'Medium Priority' ? 'text-orange-500 font-bold' : cat.healthStatus === 'Low Priority' ? 'text-blue-500 font-bold' : 'text-green-500'}`}>{cat.healthStatus}</span>
+                                                <span><strong className={`font-semibold ${cat.healthStatus === 'Out of Stock' ? 'text-red-600 dark:text-red-400' : 'text-gray-900 dark:text-gray-100'}`}>{cat.stockLeft}</strong> left</span>
+                                                <span className={`${cat.healthStatus === 'Out of Stock' ? 'text-red-500 font-bold' : cat.healthStatus === 'Low Stock' ? 'text-orange-500 font-bold' : 'text-green-500'}`}>{cat.healthStatus}</span>
                                             </div>
                                         </div>
                                     ))}

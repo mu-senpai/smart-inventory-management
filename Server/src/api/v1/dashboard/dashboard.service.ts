@@ -45,32 +45,11 @@ export const getDashboardSummary = async () => {
       },
     ]),
 
-    // Low Stock Count (Only HIGH PRIORITY: Gap >= 75%)
-    Product.aggregate([
-      {
-        $match: {
-          $expr: { $lt: ["$stockQuantity", "$minThreshold"] },
-          status: { $ne: ProductStatus.OUT_OF_STOCK }
-        }
-      },
-      {
-        $project: {
-          gapPercentage: {
-            $cond: {
-              if: { $gt: ["$minThreshold", 0] },
-              then: { $multiply: [{ $divide: [{ $subtract: ["$minThreshold", "$stockQuantity"] }, "$minThreshold"] }, 100] },
-              else: 100
-            }
-          }
-        }
-      },
-      {
-        $match: { gapPercentage: { $gte: 75 } }
-      },
-      {
-        $count: "highPriorityCount"
-      }
-    ]),
+    // Low Stock Count (All items below threshold)
+    Product.countDocuments({
+      $expr: { $lt: ["$stockQuantity", "$minThreshold"] },
+      status: { $ne: ProductStatus.OUT_OF_STOCK }
+    }),
 
     // Top 8 Products by Lowest Stock for Insights
     Product.find({})
@@ -80,20 +59,10 @@ export const getDashboardSummary = async () => {
         .lean()
   ]);
 
-  const highPriorityCount = lowStockCount.length > 0 ? lowStockCount[0].highPriorityCount : 0;
-
   const productSummaries = productsList.map(p => {
-    const gap = p.minThreshold - p.stockQuantity;
-    const gapPercentage = p.minThreshold > 0 ? (gap / p.minThreshold) * 100 : (gap > 0 ? 100 : 0);
-
-    let healthStatus = "Normal";
-    if (p.stockQuantity === 0 || p.status === ProductStatus.OUT_OF_STOCK || gapPercentage >= 75) {
-      healthStatus = "High Priority";
-    } else if (gapPercentage >= 40) {
-      healthStatus = "Medium Priority";
-    } else if (gapPercentage > 0) {
-      healthStatus = "Low Priority";
-    }
+    let healthStatus = "OK";
+    if (p.stockQuantity === 0 || p.status === ProductStatus.OUT_OF_STOCK) healthStatus = "Out of Stock";
+    else if (p.stockQuantity < p.minThreshold) healthStatus = "Low Stock";
 
     return {
       productName: p.name,
@@ -110,7 +79,7 @@ export const getDashboardSummary = async () => {
       revenueResult.length > 0
         ? Math.round(revenueResult[0].totalRevenue * 100) / 100
         : 0,
-    lowStockCount: highPriorityCount,
+    lowStockCount,
     productSummaries
   };
 };
