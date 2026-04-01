@@ -109,6 +109,9 @@ export default function CategoriesPage() {
                             {/* Table Header */}
                             <thead className="bg-gray-50 dark:bg-[#1f1f1f] transition-colors">
                                 <tr>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider min-w-[100px]">
+                                        Category ID
+                                    </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider min-w-[180px]">
                                         Name
                                     </th>
@@ -130,7 +133,7 @@ export default function CategoriesPage() {
                                     // Loading skeleton rows
                                     Array.from({ length: 4 }).map((_, i) => (
                                         <tr key={i}>
-                                            {Array.from({ length: 4 }).map((_, j) => (
+                                            {Array.from({ length: 5 }).map((_, j) => (
                                                 <td key={j} className="px-6 py-4">
                                                     <div className="h-4 bg-gray-200 dark:bg-[#303030] rounded animate-pulse" />
                                                 </td>
@@ -140,6 +143,11 @@ export default function CategoriesPage() {
                                 ) : (
                                     categories.map((category) => (
                                         <tr key={category._id} className="hover:bg-gray-50 dark:hover:bg-[#1f1f1f] transition-colors">
+                                            {/* Category ID */}
+                                            <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500 font-mono">
+                                                #{(category?._id?.slice(-6) ?? '------').toUpperCase()}
+                                            </td>
+
                                             {/* Name */}
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="text-sm font-medium text-gray-900 dark:text-white transition-colors">

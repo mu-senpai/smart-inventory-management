@@ -111,6 +111,9 @@ export default function ProductsClient({ initialProducts }: { initialProducts?: 
                             {/* Table Header */}
                             <thead className="bg-gray-50 dark:bg-[#1f1f1f] transition-colors">
                                 <tr>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider min-w-[100px]">
+                                        Product ID
+                                    </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider min-w-[180px]">
                                         Name
                                     </th>
@@ -141,7 +144,7 @@ export default function ProductsClient({ initialProducts }: { initialProducts?: 
                                     // Loading skeleton rows
                                     Array.from({ length: 5 }).map((_, i) => (
                                         <tr key={i}>
-                                            {Array.from({ length: 7 }).map((_, j) => (
+                                            {Array.from({ length: 8 }).map((_, j) => (
                                                 <td key={j} className="px-6 py-4">
                                                     <div className="h-4 bg-gray-200 dark:bg-[#303030] rounded animate-pulse" />
                                                 </td>
@@ -150,7 +153,12 @@ export default function ProductsClient({ initialProducts }: { initialProducts?: 
                                     ))
                                 ) : (
                                     resolvedProducts.map((product: any) => (
-                                        <tr key={product.id} className="hover:bg-gray-50 dark:hover:bg-[#1f1f1f] transition-colors">
+                                        <tr key={product._id} className="hover:bg-gray-50 dark:hover:bg-[#1f1f1f] transition-colors">
+                                            {/* Product ID */}
+                                            <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500 font-mono">
+                                                #{(product?._id?.slice(-6) ?? '------').toUpperCase()}
+                                            </td>
+
                                             {/* Name */}
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="text-sm font-medium text-gray-900 dark:text-white transition-colors">
@@ -221,7 +229,7 @@ export default function ProductsClient({ initialProducts }: { initialProducts?: 
                                                     <Popconfirm
                                                         title="Delete Product"
                                                         description="Are you sure you want to delete this product?"
-                                                        onConfirm={() => handleDelete(product.id)}
+                                                        onConfirm={() => handleDelete(product._id)}
                                                         okText="Yes"
                                                         cancelText="No"
                                                         okButtonProps={{
