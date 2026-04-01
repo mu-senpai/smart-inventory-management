@@ -1,0 +1,192 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+body {
+    @apply text-gray-900 bg-white dark:text-gray-100 dark:bg-[#141414] transition-colors duration-300;
+}
+
+/* Dashboard sidebar related css */
+.custom-menu .ant-menu-item-selected {
+  background-color: #272877 !important;
+  color: white !important;
+  border-radius: 6px !important;
+}
+
+.custom-menu .ant-menu-item-selected::after {
+  border-right: none !important;
+}
+
+.custom-menu .ant-menu-item {
+  color: #4b5563 !important; /* Tailwind gray-600 */
+  margin: 4px 12px !important;
+  border-radius: 8px !important;
+  padding: 12px 16px !important;
+  height: auto !important;
+  width: calc(100% - 24px) !important; /* Prevents horizontal scroll by accounting for horizontal margins */
+  transition: all 0.2s ease !important;
+}
+
+.custom-menu .ant-menu-item:hover {
+  background-color: #f1f5f9 !important; /* Tailwind slate-100 */
+  color: #111827 !important; /* Tailwind gray-900 */
+  border-radius: 8px !important;
+}
+
+.custom-menu .ant-menu-item a {
+  color: black !important;
+  text-decoration: none !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.custom-menu .ant-menu-item a:hover {
+  color: black !important;
+  text-decoration: none !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.custom-menu .ant-menu-item-selected a {
+  color: white !important;
+}
+
+.custom-menu .ant-menu-item .ant-menu-item-icon {
+  color: #6b7280 !important; /* Tailwind gray-500 */
+  margin-right: 12px !important;
+  transition: all 0.2s ease !important;
+}
+
+.custom-menu .ant-menu-item:hover .ant-menu-item-icon {
+  color: #111827 !important;
+  margin-right: 12px !important;
+}
+
+.custom-menu .ant-menu-item-selected .ant-menu-item-icon {
+  color: white !important;
+  margin-right: 12px !important;
+}
+
+.custom-menu .ant-menu-inline-collapsed .ant-menu-item {
+  padding-left: 24px !important;
+  text-align: center !important;
+}
+
+.custom-menu .ant-menu-inline-collapsed .ant-menu-item .ant-menu-item-icon {
+  margin-right: 0 !important;
+}
+
+/* Remove default Ant Design menu styling */
+.custom-menu .ant-menu-dark .ant-menu-item-selected {
+  background-color: #272877 !important;
+}
+
+.custom-menu .ant-menu-dark .ant-menu-item:hover {
+  background-color: #272877 !important;
+}
+
+.custom-menu .ant-menu-item-active {
+  background-color: #272877 !important;
+}
+
+/* Dark Mode Overrides for Sidebar Menu Typography */
+html.dark .custom-menu .ant-menu-item {
+  color: #e5e7eb !important; /* Tailwind gray-200 */
+}
+
+html.dark .custom-menu .ant-menu-item:hover {
+  background-color: #1f1f1f !important;
+  color: #ffffff !important; /* Tailwind white */
+}
+
+html.dark .custom-menu .ant-menu-item a {
+  color: #e5e7eb !important;
+}
+
+html.dark .custom-menu .ant-menu-item:hover a {
+  color: #ffffff !important;
+}
+
+html.dark .custom-menu .ant-menu-item-selected a {
+  color: #ffffff !important;
+}
+
+html.dark .custom-menu .ant-menu-item .ant-menu-item-icon {
+  color: #ffffff !important; /* White icons */
+}
+
+html.dark .custom-menu .ant-menu-item:hover .ant-menu-item-icon {
+  color: #ffffff !important;
+}
+
+html.dark .custom-menu .ant-menu-item-selected .ant-menu-item-icon {
+  color: #ffffff !important;
+}
+
+/* Responsive table enhancements */
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 14px;
+  }
+
+  .table-responsive th,
+  .table-responsive td {
+    padding: 12px 8px;
+  }
+
+  /* Stack pagination on mobile */
+  .pagination-mobile {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* Custom scrollbar for table */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .dark .overflow-x-auto::-webkit-scrollbar-track { background: #1f1f1f; }
+  .dark .overflow-x-auto::-webkit-scrollbar-thumb { background: #4b5563; }
+  .dark .overflow-x-auto::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #334155;
+    border: 2px solid #000000;
+  }
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover { background-color: #475569; }
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* Custom scrollbar for overarching layout */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1; /* Tailwind slate-300 */
+  border-radius: 20px;
+  border: 2px solid #f8fafc; /* Matches slate-50 background for padding effect */
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8; /* Tailwind slate-400 */
+}
